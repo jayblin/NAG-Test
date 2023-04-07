@@ -41,7 +41,12 @@ const CardsItem: FC<Props> = ({ url, name }) => {
         }}
       />
     ) : (
-      <Skeleton height={imgHeight} />
+      <Skeleton
+        height={imgHeight}
+        sx={{
+          transform: 'none',
+        }}
+      />
     )}
 
     <CardContent>

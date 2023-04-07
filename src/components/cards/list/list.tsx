@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Grid, Skeleton } from "@mui/material";
+import { Card, Grid } from "@mui/material";
 import CardsItem from "./item";
 import { IListResponse } from "../../../types";
 import { isListResponse } from "../../../utils";
@@ -31,7 +31,7 @@ const CardsList: FC<Props> = ({ isLoading, cardsLimit, data }) => {
         isLoading && (
           noDataArray.map((item, index) => (
             <Grid item xs={6} sm={4} md={3} lg={2} key={index}>
-              <Skeleton height="220px" />
+              <Card sx={{height: '220.438px'}} />
             </Grid>
           ))
         )

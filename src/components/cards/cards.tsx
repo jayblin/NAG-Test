@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useMemo, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { Box, CircularProgress, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { fetcher, isListResponse } from '../../utils';
@@ -27,11 +27,15 @@ const Cards: FC = () => {
   }
   const [page, setPage] = useState(0);
   const cardsLimit = getCardsLimit();
-
   const { data, error, isLoading } = useSWR<IListResponse>(`https://pokeapi.co/api/v2/pokemon/?offset=${page}&limit=${cardsLimit}`, fetcher);
+  const [count, setCount] = useState(0);
 
-  const hasData = isListResponse(data);
-  const count = hasData ? data.count : 0;
+  useEffect(() => {
+    if (isListResponse(data)) {
+      setCount(data.count)
+    }
+  }, [data]);
+
   const pagesQty = Math.ceil(count / getCardsLimit());
 
   const handleChange = (_event: ChangeEvent<unknown>, value: number) => {
