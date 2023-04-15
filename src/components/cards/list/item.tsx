@@ -1,12 +1,11 @@
 import { Card, CardContent, CardMedia, Skeleton, Typography } from "@mui/material";
 import { FC } from "react";
 import useSWR from 'swr'
-import { IItemResponse } from "../../../types";
+import { PokeminDetail, Pokemon } from "../../../types";
 import { capitalizeFirstLetter, fetcher, isItemResponse } from "../../../utils";
 
 interface Props {
-  url: string,
-  name: string,
+	pokemon: Pokemon;
 }
 
 const TypographySkeleton: FC = () => (
@@ -18,9 +17,10 @@ const TypographySkeleton: FC = () => (
   />
 )
 
-const CardsItem: FC<Props> = ({ url, name }) => {
-  const { data, error } = useSWR<IItemResponse>(url, fetcher);
-  if (error) console.log(error)
+const CardsItem: FC<Props> = ({pokemon}) => {
+	const {url, name} = pokemon;
+  const { data, error } = useSWR<PokeminDetail>(url, fetcher);
+  if (error) console.log(error) // Лучше показать ошибку в карточке
   const pokemonName = capitalizeFirstLetter(name);
   const hasData = isItemResponse(data);
   const imgHeight = 100;

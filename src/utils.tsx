@@ -1,4 +1,4 @@
-import { IPokemon, IListResponse, IItemResponse } from "./types";
+import { Pokemon, ListResponse, PokeminDetail } from "./types";
 
 export async function fetcher<JSON = any>(
   input: RequestInfo,
@@ -9,9 +9,12 @@ export async function fetcher<JSON = any>(
 }
 
 const isObject = (value: any) => typeof value === 'object' && value !== null && !Array.isArray(value);
-export const capitalizeFirstLetter = (string: string) => string[0].toUpperCase() + string.slice(1);
+export const capitalizeFirstLetter = (string: string) => string.length > 0 ?
+	string[0].toUpperCase() + string.slice(1) :
+	''
+;
 
-export const isPokemon = (pokemon: any): pokemon is IPokemon => {
+export const isPokemon = (pokemon: any): pokemon is Pokemon => {
   // Проверяем, что pokemon объект
   return isObject(pokemon) &&
 
@@ -24,7 +27,7 @@ export const isPokemon = (pokemon: any): pokemon is IPokemon => {
   typeof pokemon.url === 'string';
 }
 
-export const isListResponse = (response: any): response is IListResponse => {
+export const isListResponse = (response: any): response is ListResponse => {
   // Проверяем, что pokemon объект
   return isObject(response) &&
 
@@ -49,10 +52,10 @@ export const isListResponse = (response: any): response is IListResponse => {
   // Проверяем, что у response есть свойство results
   response.hasOwnProperty('results') &&
   Array.isArray(response.results) &&
-  response.results.every((pokemon: IPokemon) => isPokemon(pokemon));
+  response.results.every((pokemon: Pokemon) => isPokemon(pokemon));
 }
 
-export const isItemResponse = (response: any): response is IItemResponse => {
+export const isItemResponse = (response: any): response is PokeminDetail => {
   // Проверяем, что pokemon объект
   return isObject(response) &&
 

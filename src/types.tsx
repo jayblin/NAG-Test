@@ -1,25 +1,19 @@
-export interface IPokemon {
+export interface Pokemon {
   name: string,
   url: string,
 }
 
-export interface IPokemonDetail extends IPokemon {
-  width: number,
-  height: number,
-}
-
-export interface IListResponse {
+export interface ListResponse {
   count: number,
   next: string | null,
   previous: string | null,
-  results: IPokemon[],
+  results: Pokemon[],
 }
 
-export interface IItemResponse {
+export interface PokeminDetail {
   weight: number,
   height: number,
   sprites: {
     front_default: string,
-    // front_default: string | null,
   }
 }
